@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="/newtodo/" method="POST">
+    {% csrf_token %}
+    <div class="mb-3" style="margin-top: 30px;">
+      <label for="exampleInputEmail1" class="form-label">Enter your todo title</label>
+      <input type="text" class="form-control" name="title" placeholder="Type..">
+      <label for="exampleInputEmail1" class="form-label">Enter your todo content</label>
+      <input type="text" class="form-control" name="content" placeholder="Type..">
+      <input type="submit" class="btn btn-primary"></input>
+    </div>
+
+
+  </form>
+
+
+{% for todo in todo_list %}
+<div class="card" style="width: 18rem">
+  <img src="https://{{todo.todo_image}}" class="card-img-top" alt="..." />
+  <div class="card-body">
+    <h5 class="card-title">{{todo.todo_title|title}}</h5>
+    <p class="card-text">{{todo.todo_text|title}}</p>
+        {% csrf_token %}
+    <form action="delete/" >
+      <a href="delete/{{todo.id}}" class="btn btn-danger">Delete</a>
+    </form>
+  </div>
+</div>
+{% endfor %}
+{% endblock content %}
